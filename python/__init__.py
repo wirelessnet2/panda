@@ -297,6 +297,7 @@ class Panda(object):
       self.reconnect()
 
   def recover(self, timeout=None):
+    self.reset(enter_bootstub=True)
     self.reset(enter_bootloader=True)
     t_start = time.time()
     while len(PandaDFU.list()) == 0:
