@@ -354,6 +354,9 @@ void ignition_can_hook(CAN_FIFOMailBox_TypeDef *to_push) {
   ignition_can_cnt = 0U;  // reset counter
 
   if (bus == 0) {
+    if (addr == 0x40){
+      ignition_can = true;
+    }
     // TODO: verify on all supported GM models that we can reliably detect ignition using only this signal,
     // since the 0x1F1 signal can briefly go low immediately after ignition
     if ((addr == 0x160) && (len == 5)) {
