@@ -39,6 +39,7 @@
 #define SAFETY_HONDA_BOSCH_HARNESS 20U
 #define SAFETY_VOLKSWAGEN_PQ 21U
 #define SAFETY_SUBARU_LEGACY 22U
+#define SAFETY_HONDA_GATEWAY 100U
 
 uint16_t current_safety_mode = SAFETY_SILENT;
 const safety_hooks *current_hooks = &nooutput_hooks;
@@ -206,14 +207,13 @@ const safety_hook_config safety_hook_registry[] = {
   {SAFETY_VOLKSWAGEN_MQB, &volkswagen_mqb_hooks},
   {SAFETY_VOLKSWAGEN_PQ, &volkswagen_pq_hooks},
   {SAFETY_NOOUTPUT, &nooutput_hooks},
-#ifdef ALLOW_DEBUG
+  {SAFETY_HONDA_GATEWAY, &honda_gateway_hooks},
+  {SAFETY_ALLOUTPUT, &alloutput_hooks},
   {SAFETY_CADILLAC, &cadillac_hooks},
   {SAFETY_TESLA, &tesla_hooks},
   {SAFETY_NISSAN, &nissan_hooks},
-  {SAFETY_ALLOUTPUT, &alloutput_hooks},
   {SAFETY_GM_ASCM, &gm_ascm_hooks},
   {SAFETY_FORD, &ford_hooks},
-#endif
 };
 
 int set_safety_hooks(uint16_t mode, int16_t param) {

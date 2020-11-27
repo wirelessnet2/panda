@@ -323,6 +323,37 @@ static int honda_bosch_fwd_hook(int bus_num, CAN_FIFOMailBox_TypeDef *to_fwd) {
   return bus_fwd;
 }
 
+static void honda_gateway_init(int16_t param) {
+  UNUSED(param);
+  relay_malfunction_reset();
+}
+
+static int honda_gateway_fwd_hook(int bus_num, CAN_FIFOMailBox_TypeDef *to_fwd) {
+  int bus_fwd = -1;
+  int addr = GET_ADDR(to_fwd);
+
+if (bus_num == 0) {
+    bool is_econ_status = addr == 0x221;
+    bool is_rough_wheel_speed = addr == 0x255;
+    bool is_scm_buttons = addr == 0x296;
+    bool is_wipers = addr == 0x37B;
+    bool forward = is_econ_status || is_rough_wheel_speed || is_scm_buttons || is_wipers;
+    if (forward) {
+      bus_fwd = 2
+    }
+}
+
+  return bus_fwd;
+}
+
+const safety_hooks honda_gateway_hooks = {
+  .init = honda_gateway_init,
+  .rx = default_rx_hook,
+  .tx = alloutput_tx_hook,
+  .tx_lin = alloutput_tx_lin_hook,
+  .fwd = honda_gateway_fwd_hook,
+};
+
 const safety_hooks honda_nidec_hooks = {
   .init = honda_nidec_init,
   .rx = honda_rx_hook,

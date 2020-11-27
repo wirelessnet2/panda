@@ -816,7 +816,9 @@ int main(void) {
   // use TIM2->CNT to read
 
   // init to SILENT and can silent
-  set_safety_mode(SAFETY_SILENT, 0);
+  set_safety_mode(SAFETY_HONDA_GATEWAY, 0);
+  can_init(CAN_NUM_FROM_BUS_NUM(0));
+  can_init(CAN_NUM_FROM_BUS_NUM(2));
 
   // enable CAN TXs
   current_board->enable_can_transcievers(true);

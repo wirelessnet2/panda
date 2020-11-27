@@ -4,26 +4,19 @@ CFLAGS += -Tstm32_flash.ld
 
 DFU_UTIL = "dfu-util"
 
-# Compile fast charge (DCP) only not on EON
-ifeq (,$(wildcard /EON))
-  BUILDER = DEV
-else
-  CFLAGS += "-DEON"
-  BUILDER = EON
-  DFU_UTIL = "tools/dfu-util-aarch64"
-endif
+
+BUILDER = DEV
+CFLAGS += "-DGATEWAY"
+
 
 CC = arm-none-eabi-gcc
 OBJCOPY = arm-none-eabi-objcopy
 OBJDUMP = arm-none-eabi-objdump
 
-ifeq ($(RELEASE),1)
-  CERT = ../../pandaextra/certs/release
-else
-  # enable the debug cert
-  CERT = ../certs/debug
-  CFLAGS += "-DALLOW_DEBUG"
-endif
+
+CERT = ../certs/debug
+CFLAGS += "-DALLOW_DEBUG"
+
 
 
 DEPDIR = generated_dependencies
